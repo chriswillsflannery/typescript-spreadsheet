@@ -1,23 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import './App.css';
 
-function App() {
+const StyledGrid = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  border: 1px solid white;
+`;
+
+interface Row {
+
+}
+
+const Row: React.FC = () => {
+  return (
+    <>
+      <p>Row</p>
+    </>
+  )
+}
+
+const App: React.FC = () => {
+
+  const [numRows, setNumRows] = useState(5);
+  const [numColumns, setNumColumns] = useState(5);
+
+  const styles = {
+    row: {
+      gridTemplateColumns: `repeat(${numRows}, 1fr)`,
+    }
+  };
+
+  const rows = [];
+  for (let i = 0; i < numRows; i++) {
+    rows.push(<Row style={styles.row} key={i} />);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <StyledGrid>
+          {rows}
+        </StyledGrid>
       </header>
     </div>
   );
