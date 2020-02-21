@@ -9,7 +9,6 @@ const App: React.FC = () => {
   const [numColumns, setNumColumns] = useState(6);
 
   const StyledGrid = styled.div`
-    border: 1px solid red;
     display: grid;
     grid-template-columns: repeat(${numColumns}, 1fr);
   `;
@@ -20,17 +19,15 @@ const App: React.FC = () => {
   }
 
   return (
-    <>
-      <div className="App">
-        <StyledGrid>
-          {columns}
-        </StyledGrid>
-        <div className="Controller">
-          <button onClick={() => setNumRows(numRows + 1)}>Add Row</button>
-          <button onClick={() => setNumColumns(numColumns + 1)}>Add Column</button>
-        </div>
+    <div className="App">
+      <StyledGrid>
+        {columns}
+      </StyledGrid>
+      <div className="Controller">
+        <button onClick={() => setNumRows(numRows + 1)}>Add Row</button>
+        <button onClick={() => setNumColumns(numColumns + 1)}>Add Column</button>
       </div>
-    </>
+    </div>
   );
 }
 

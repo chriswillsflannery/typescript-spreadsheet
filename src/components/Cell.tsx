@@ -6,12 +6,17 @@ interface Props {
 }
 
 const Cell: React.FC<Props> = ({ col, row }) => {
+
+  const alpha = 'abcdefghijklmnopqrstuvwxyz';
+  let bgColor;
+  if (col === 0 || row === 0) bgColor = 'rgba(255,255,255,0.1)';
+
   return (
-    <div className="grid-cell ruler" >
-      {(col === 0 && row === 0) && 0}
-      {(col === 0 && row !== 0) && row}
-      {(col !== 0 && row === 0) && col}
-      {(col !== 0 && row !== 0) && 'x'}
+    <div style={{ backgroundColor: bgColor }} className="grid-cell">
+      {(col === 0 && row === 0) && ' '}
+      {(col === 0 && row !== 0) && alpha[(row - 1) % 26]}
+      {(col !== 0 && row === 0) && alpha[(col - 1) % 26]}
+      {(col !== 0 && row !== 0) && ' '}
     </div>
   )
 }
