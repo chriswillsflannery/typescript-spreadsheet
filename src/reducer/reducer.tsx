@@ -30,11 +30,21 @@ type State = { cellVals: Payload[] }
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'setCellValue':
-      return {
-        cellVals: [
-          ...state.cellVals,
-          action.payload
-        ]
+      let prevState = { ...state };
+      console.log('prevState', prevState);
+      const cell = prevState.cellVals.find(cell => cell.key === action.payload.key);
+      if (cell) {
+        if (cell?.value) cell.value = action.payload.value;
+        return {
+          ...prevState
+        }
+      } else {
+        return {
+          cellVals: [
+            ...state.cellVals,
+            action.payload
+          ]
+        }
       }
     default:
       return state;

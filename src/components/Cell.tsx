@@ -31,8 +31,8 @@ const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
 
   const currentCell = `col${col}row${row}`;
   console.log(state.cellVals);
-  const cell = state.cellVals.find(cell => cell.key = currentCell);
-  console.log('cell!', cell);
+  const cell = state.cellVals.find(cell => cell.key === currentCell);
+  console.log('cv', cell?.value);
 
   return (
     <div
@@ -49,7 +49,7 @@ const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
             type="text"
             placeholder=""
             onChange={handleChange}
-            value={formVal}
+            value={cell?.value}
           />
         </form>
       )}
