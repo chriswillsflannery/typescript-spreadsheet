@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import Column from './components/Column';
+import { reducer, initialState } from './reducer/reducer';
 import './App.css';
 
 const App: React.FC = () => {
-
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [numRows, setNumRows] = useState(6);
   const [numColumns, setNumColumns] = useState(6);
 
