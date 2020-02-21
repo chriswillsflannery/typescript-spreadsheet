@@ -31,14 +31,15 @@ export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'setCellValue':
       let prevState = { ...state };
-      console.log('prevState', prevState);
+      // console.log('prevState', prevState);
       const cell = prevState.cellVals.find(cell => cell.key === action.payload.key);
       if (cell) {
-        if (cell?.value) cell.value = action.payload.value;
+        cell.value = action.payload.value;
         return {
           ...prevState
         }
       } else {
+        console.log('cell does not exist');
         return {
           cellVals: [
             ...state.cellVals,

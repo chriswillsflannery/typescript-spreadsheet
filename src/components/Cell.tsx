@@ -18,19 +18,16 @@ interface Props {
 
 const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
 
-  const [formVal, setFormVal] = useState('');
-
   const alpha = 'abcdefghijklmnopqrstuvwxyz';
   let bgColor;
   if (col === 0 || row === 0) bgColor = 'rgba(255,255,255,0.1)';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormVal(e.target.value);
     dispatchChange(`col${col}row${row}`, e.target.value);
   }
 
   const currentCell = `col${col}row${row}`;
-  console.log(state.cellVals);
+  // console.log(state.cellVals);
   const cell = state.cellVals.find(cell => cell.key === currentCell);
   console.log('cv', cell?.value);
 
@@ -49,7 +46,7 @@ const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
             type="text"
             placeholder=""
             onChange={handleChange}
-            value={cell?.value}
+            value={cell?.value || ''}
           />
         </form>
       )}
