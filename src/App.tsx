@@ -8,6 +8,11 @@ const App: React.FC = () => {
   const [numRows, setNumRows] = useState(6);
   const [numColumns, setNumColumns] = useState(6);
 
+  const handleChange = async (a: any, b: any) => {
+    console.log(a, b);
+    dispatch({ type: 'setCellValue', payload: { key: a, value: b } });
+  }
+
   const styles_grid = {
     display: 'grid',
     gridTemplateColumns: `repeat(${numColumns}, 1fr)`
@@ -15,7 +20,13 @@ const App: React.FC = () => {
 
   const columns = [];
   for (let i = 0; i < numColumns; i++) {
-    columns.push(<Column key={`col${i}`} col={i} rows={numRows} />)
+    columns.push(<Column
+      key={`col${i}`}
+      col={i}
+      rows={numRows}
+      dispatchChange={(x: any, y: any) => handleChange(x, y)}
+      state={state}
+    />)
   }
 
   return (

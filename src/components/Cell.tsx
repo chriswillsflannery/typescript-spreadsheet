@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 interface Props {
   col: number;
   row: number;
+  dispatchChange: any;
+  state: object;
 }
 
-const Cell: React.FC<Props> = ({ col, row }) => {
+const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
 
   const [formVal, setFormVal] = useState('');
 
@@ -13,13 +15,17 @@ const Cell: React.FC<Props> = ({ col, row }) => {
   let bgColor;
   if (col === 0 || row === 0) bgColor = 'rgba(255,255,255,0.1)';
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormVal(e.target.value);
+    dispatchChange(`col${col}row${row}`, e.target.value);
+    console.log('state', state);
   }
+
+  // let cellValue = state[`col${col}row${row}`];
 
   return (
     <div
-      id={`cell${col}${row}`}
+      id={`col${col}row${row}`}
       style={{ backgroundColor: bgColor }}
       className="grid-cell">
       {(col === 0 && row === 0) && ' '}
