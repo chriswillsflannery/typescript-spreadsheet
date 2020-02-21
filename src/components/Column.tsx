@@ -1,11 +1,20 @@
 import React from 'react';
 import Cell from './Cell';
 
+interface CellProp {
+  key: string,
+  value: string,
+}
+
+interface StateProp {
+  cellVals: CellProp[];
+}
+
 interface Props {
   col: number;
   rows: number;
   dispatchChange: any;
-  state: object;
+  state: StateProp;
 }
 
 const Column: React.FC<Props> = ({ col, rows, dispatchChange, state }) => {

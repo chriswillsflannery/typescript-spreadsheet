@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 
+interface CellProp {
+  key: string,
+  value: string,
+}
+
+interface StateProp {
+  cellVals: CellProp[];
+}
+
 interface Props {
   col: number;
   row: number;
   dispatchChange: any;
-  state: object;
+  state: StateProp;
 }
 
 const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
@@ -18,10 +27,12 @@ const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormVal(e.target.value);
     dispatchChange(`col${col}row${row}`, e.target.value);
-    console.log('state', state);
   }
 
-  // let cellValue = state[`col${col}row${row}`];
+  const currentCell = `col${col}row${row}`;
+  console.log(state.cellVals);
+  const cell = state.cellVals.find(cell => cell.key = currentCell);
+  console.log('cell!', cell);
 
   return (
     <div
