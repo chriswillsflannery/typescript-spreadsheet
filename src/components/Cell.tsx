@@ -1,12 +1,18 @@
 import React from 'react';
 
 interface Props {
-  disp: string;
+  col: number;
+  row: number;
 }
 
-const Cell: React.FC<Props> = ({ disp }) => {
+const Cell: React.FC<Props> = ({ col, row }) => {
   return (
-    <div className="grid-cell ruler" >{disp}</div>
+    <div className="grid-cell ruler" >
+      {(col === 0 && row === 0) && 0}
+      {(col === 0 && row !== 0) && row}
+      {(col !== 0 && row === 0) && col}
+      {(col !== 0 && row !== 0) && 'x'}
+    </div>
   )
 }
 

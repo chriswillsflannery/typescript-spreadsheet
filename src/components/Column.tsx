@@ -2,15 +2,15 @@ import React from 'react';
 import Cell from './Cell';
 
 interface Props {
-  uq: string;
+  col: number;
   rows: number;
 }
 
-const Column: React.FC<Props> = ({ uq, rows }) => {
+const Column: React.FC<Props> = ({ col, rows }) => {
 
   const cells = [];
   for (let i = 0; i < rows; i++) {
-    cells.push(<Cell disp={`${uq}row${i}`} key={`row${i}`} />)
+    cells.push(<Cell key={`row${i}`} col={col} row={i} />)
   }
 
   return (

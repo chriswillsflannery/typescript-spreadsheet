@@ -5,25 +5,32 @@ import './App.css';
 
 const App: React.FC = () => {
 
-  const [numRows, setNumRows] = useState(5);
-  const [numColumns, setNumColumns] = useState(5);
+  const [numRows, setNumRows] = useState(6);
+  const [numColumns, setNumColumns] = useState(6);
 
   const StyledGrid = styled.div`
+    border: 1px solid red;
     display: grid;
-    grid-template-columns: repeat(${numRows}, 1fr);
+    grid-template-columns: repeat(${numColumns}, 1fr);
   `;
 
   const columns = [];
   for (let i = 0; i < numColumns; i++) {
-    columns.push(<Column key={`col${i}`} uq={`col${i}`} rows={numRows} />)
+    columns.push(<Column key={`col${i}`} col={i} rows={numRows} />)
   }
 
   return (
-    <div className="App">
-      <StyledGrid>
-        {columns}
-      </StyledGrid>
-    </div>
+    <>
+      <div className="App">
+        <StyledGrid>
+          {columns}
+        </StyledGrid>
+        <div className="Controller">
+          <button onClick={() => setNumRows(numRows + 1)}>Add Row</button>
+          <button onClick={() => setNumColumns(numColumns + 1)}>Add Column</button>
+        </div>
+      </div>
+    </>
   );
 }
 
