@@ -1,3 +1,9 @@
+/**
+ * @author @chriswillsflannery
+ * @exports Column
+ * contains Column component for use in App component
+ */
+
 import React from 'react';
 import Cell from './Cell';
 

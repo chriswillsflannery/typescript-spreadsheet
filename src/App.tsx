@@ -9,7 +9,6 @@ const App: React.FC = () => {
   const [numColumns, setNumColumns] = useState(6);
 
   const handleChange = async (a: any, b: any) => {
-    console.log(a, b);
     dispatch({ type: 'setCellValue', payload: { key: a, value: b } });
   }
 
