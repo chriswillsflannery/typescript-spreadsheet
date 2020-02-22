@@ -7,6 +7,7 @@
 
 import React from 'react';
 import { parseString } from '../utils/parseString';
+import { convertVals } from '../utils/convertVals';
 
 interface CellProp {
   key: string,
@@ -48,7 +49,11 @@ const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
         try {
           //validate input is valid col/row syntax
           let input = cell?.value.slice(2, cell?.value.length - 1);
+
+          // these helper functions don't cover all edge cases so please use cell input format described in Readme
           const parsedArray = parseString(input);
+          console.log('parsedArray', parsedArray);
+          const convertedArray = convertVals(parsedArray, state);
         } catch (err) {
           alert('Error: please enter valid column/row format');
         }
