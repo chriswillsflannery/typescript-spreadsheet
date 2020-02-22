@@ -1,3 +1,4 @@
+/* eslint-disable no-eval */
 /**
  * @author @chriswillsflannery
  * @exports Cell
@@ -5,6 +6,7 @@
  */
 
 import React from 'react';
+import { parseString } from '../utils/parseString';
 
 interface CellProp {
   key: string,
@@ -36,12 +38,23 @@ const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
   }
 
   // to scale out, we would need to sanitize input to prevent SQL injection / XSS attack
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (cell?.value[0] === '=') {
-      let num = eval(cell?.value.slice(1));
-      console.log('num', num);
-      dispatchChange(`col${col}row${row}`, num);
+    try {
+      if (cell?.value[0] === '=' && !isNaN(Number(cell?.value[1]))) {
+        let num = eval(cell?.value.slice(1));
+        dispatchChange(`col${col}row${row}`, num);
+      } else if (cell?.value[0] === '=' && cell?.value[1] === '(') {
+        try {
+          //validate input is valid col/row syntax
+          let input = cell?.value.slice(2, cell?.value.length - 1);
+          const parsedArray = parseString(input);
+        } catch (err) {
+          alert('Error: please enter valid column/row format');
+        }
+      }
+    } catch (err) {
+      alert('Error: please enter valid math.');
     }
   }
   return (
@@ -50,8 +63,8 @@ const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
       style={{ backgroundColor: bgColor }}
       className="grid-cell">
       {(col === 0 && row === 0) && ' '}
-      {(col === 0 && row !== 0) && <p>{`row${row}col${col}`}</p>}
-      {(col !== 0 && row === 0) && <p>{`row${row}col${col}`}</p>}
+      {(col === 0 && row !== 0) && <p>{`row${row}`}</p>}
+      {(col !== 0 && row === 0) && <p>{`col${col}`}</p>}
       {(col !== 0 && row !== 0) && (
         <form onSubmit={handleSubmit} className="grid-form">
           <input
