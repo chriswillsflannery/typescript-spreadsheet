@@ -54,6 +54,15 @@ const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
           const parsedArray = parseString(input);
           console.log('parsedArray', parsedArray);
           const convertedArray = convertVals(parsedArray, state);
+          console.log('converted array', convertedArray);
+          // try eval on this output value
+          try {
+            const evaluated = eval(convertedArray);
+            console.log('evaluated', evaluated);
+            dispatchChange(`col${col}row${row}`, evaluated);
+          } catch (err) {
+            alert('Error: Uh oh, something\'s not right!');
+          }
         } catch (err) {
           alert('Error: please enter valid column/row format');
         }
