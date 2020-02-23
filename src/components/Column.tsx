@@ -19,7 +19,7 @@ interface StateProp {
 interface Props {
   col: number;
   rows: number;
-  dispatchChange: any;
+  dispatchChange: (x: string, y: string) => Promise<void>;
   state: StateProp;
 }
 
@@ -31,7 +31,7 @@ const Column: React.FC<Props> = ({ col, rows, dispatchChange, state }) => {
       key={`row${i}`}
       col={col}
       row={i}
-      dispatchChange={(x: any, y: any) => dispatchChange(x, y)}
+      dispatchChange={(x: string, y: string) => dispatchChange(x, y)}
       state={state}
     />)
   }

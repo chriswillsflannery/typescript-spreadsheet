@@ -21,18 +21,17 @@ interface StateProp {
 interface Props {
   col: number;
   row: number;
-  dispatchChange: any;
+  dispatchChange: (x: string, y: string) => Promise<void>;
   state: StateProp;
 }
 
 const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
 
-  let bgColor;
+  let bgColor: string | undefined;
   if (col === 0 || row === 0) bgColor = 'rgba(255,255,255,0.1)';
 
-  const currentCell = `col${col}row${row}`;
-  const cell = state.cellVals.find(cell => cell.key === currentCell);
-
+  const currentCell: string = `col${col}row${row}`;
+  const cell: CellProp | undefined = state.cellVals.find(cell => cell.key === currentCell);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchChange(`col${col}row${row}`, e.target.value);
@@ -43,23 +42,21 @@ const Cell: React.FC<Props> = ({ col, row, dispatchChange, state }) => {
     e.preventDefault();
     try {
       if (cell?.value[0] === '=' && !isNaN(Number(cell?.value[1]))) {
-        let num = eval(cell?.value.slice(1));
-        dispatchChange(`col${col}row${row}`, num);
+        let num: number = eval(cell?.value.slice(1));
+        dispatchChange(`col${col}row${row}`, String(num));
       } else if (cell?.value[0] === '=' && cell?.value[1] === '(') {
         try {
           //validate input is valid col/row syntax
-          let input = cell?.value.slice(2, cell?.value.length - 1);
+          let input: string = cell?.value.slice(2, cell?.value.length - 1);
 
           // these helper functions don't cover all edge cases so please use cell input format described in Readme
-          const parsedArray = parseString(input);
-          console.log('parsedArray', parsedArray);
-          const convertedArray = convertVals(parsedArray, state);
-          console.log('converted array', convertedArray);
+          const parsedArray: string[] = parseString(input);
+          const convertedArray: string = convertVals(parsedArray, state);
+
           // try eval on this output value
           try {
-            const evaluated = eval(convertedArray);
-            console.log('evaluated', evaluated);
-            dispatchChange(`col${col}row${row}`, evaluated);
+            const evaluated: number = eval(convertedArray);
+            dispatchChange(`col${col}row${row}`, String(evaluated));
           } catch (err) {
             alert('Error: Uh oh, something\'s not right!');
           }

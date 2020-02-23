@@ -1,3 +1,8 @@
+/**
+ * @author @chriswillsflannery
+ * @exports convertVals
+ * contains convertVals logic for use in Cell.tsx
+ */
 
 interface CellProp {
   key: string,
@@ -9,12 +14,10 @@ interface StateProp {
 }
 
 export const convertVals = (array: string[], state: StateProp): string => {
-  console.log('array', array);
-  console.log('state', state);
+
   const convertedArray = array.map(str => {
     if (str[0] === 'c') {
-      const cellName = state.cellVals.find(cell => cell.key === str);
-      console.log('cellname', cellName);
+      const cellName: CellProp | undefined = state.cellVals.find(cell => cell.key === str);
       if (!cellName) {
         return '';
       } else {

@@ -5,10 +5,10 @@ import './App.css';
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [numRows, setNumRows] = useState(6);
-  const [numColumns, setNumColumns] = useState(6);
+  const [numRows, setNumRows] = useState<number>(6);
+  const [numColumns, setNumColumns] = useState<number>(6);
 
-  const handleChange = async (a: any, b: any) => {
+  const handleChange = async (a: string, b: string) => {
     dispatch({ type: 'setCellValue', payload: { key: a, value: b } });
   }
 
@@ -17,13 +17,13 @@ const App: React.FC = () => {
     gridTemplateColumns: `repeat(${numColumns}, 1fr)`
   }
 
-  const columns = [];
+  const columns: JSX.Element[] = [];
   for (let i = 0; i < numColumns; i++) {
     columns.push(<Column
       key={`col${i}`}
       col={i}
       rows={numRows}
-      dispatchChange={(x: any, y: any) => handleChange(x, y)}
+      dispatchChange={(x: string, y: string) => handleChange(x, y)}
       state={state}
     />)
   }
